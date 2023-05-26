@@ -49,7 +49,6 @@ const FilterModal: FC<FilterModalProps> = ({
   const opacity = useSharedValue(0);
   const bottom = useSharedValue(SCREEN_HEIGHT / 3);
   // Some variables
-  const view_shot_ref = useRef<any>();
   const [filterImage, setFilterImage] = useState<any>(image);
   const [bottomVisible, setBottomVisible] = useState<boolean>(false);
 
@@ -57,15 +56,6 @@ const FilterModal: FC<FilterModalProps> = ({
   const onClose = useCallback(() => {
     setVisible(false);
   }, [visible]);
-
-  const onCapture = useCallback(async () => {
-    try {
-      const uri = await captureRef(view_shot_ref);
-      // navigation.navigate("NextPage", { image: uri });
-    } catch (error) {
-      console.log(error);
-    }
-  }, [view_shot_ref.current]);
 
   useEffect(() => {
     if (visible) {
@@ -92,27 +82,24 @@ const FilterModal: FC<FilterModalProps> = ({
     <Modal visible={visible} setVisible={setVisible}>
       <BlurView style={styles.container} intensity={20}>
         <SafeAreaView style={styles.content}>
-          <Pressable onPress={onClose} style={styles.closeBtn}>
+          {/* <Pressable onPress={onClose} style={styles.closeBtn}>
             <Image
               style={styles.closeIcon}
               source={require("../../../assest/icons/icon.php.png")}
             />
-          </Pressable>
+          </Pressable> */}
 
           <View style={styles.visualization}>
-            <View style={styles.borderOfImage}>
-              <ViewShot
-                ref={view_shot_ref}
-                options={{ format: "png", quality: 1.0 }}
-              >
-                <Image source={{ uri: filterImage }} style={styles.image} />
-              </ViewShot>
+            <View
+            // style={styles.borderOfImage}
+            >
+              <Image source={{ uri: filterImage }} style={styles.image} />
             </View>
           </View>
 
           <Animated.View style={[rStyle, styles.bottomSheet]}>
             <View style={styles.bottomSheetHeader}>
-              <Pressable>
+              <Pressable onPress={onClose}>
                 <Image
                   source={{
                     uri: "https://cdn-icons-png.flaticon.com/512/25/25623.png",

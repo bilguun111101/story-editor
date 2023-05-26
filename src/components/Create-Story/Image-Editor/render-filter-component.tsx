@@ -30,7 +30,6 @@ const RenderFilterComponent: FC<RenderFilterComponentProps> = ({
   const onSubmit = useCallback(async () => {
     try {
       const uri = await captureRef(view_shot_ref);
-      console.log(uri);
       setState(uri);
     } catch (error) {
       console.log(error);
