@@ -4,6 +4,7 @@ import ChooseStory from "./Create-Story/choose-story";
 import GalleryImage from "./Create-Story/gallery-image";
 import TextModal from "./Create-Story/Modals/text-modal";
 import StickerModal from "./Create-Story/Modals/sticker-modal";
+import AnimatedIcon from "./Create-Story/Image-Editor/animated-icon";
 import AnimatedText from "./Create-Story/Image-Editor/animated-text";
 
 export {
@@ -11,6 +12,7 @@ export {
   TextModal,
   ChooseStory,
   GalleryImage,
+  AnimatedIcon,
   StickerModal,
   AnimatedText,
   SelectDropdown,

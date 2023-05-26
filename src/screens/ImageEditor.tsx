@@ -22,7 +22,12 @@ import {
 } from "react-native-gesture-handler";
 
 import BottomSheet from "@gorhom/bottom-sheet";
-import { AnimatedText, TextModal, StickerModal } from "../components";
+import {
+  AnimatedText,
+  TextModal,
+  StickerModal,
+  AnimatedIcon,
+} from "../components";
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -34,6 +39,7 @@ const ImageEditor = ({ route }: any) => {
 
   // Some variables
   const navigation = useNavigation<any>();
+  const [icons, setIcons] = useState<Icon[]>([]);
   const [texts, setTexts] = useState<TextObject[]>([]);
   const [textVisible, setTextVisible] = useState<boolean>(false);
   // View shot variable
@@ -137,28 +143,41 @@ const ImageEditor = ({ route }: any) => {
                 style={[styles.imageBackground, rStyle]}
                 source={{ uri: image }}
               >
-                {texts.length !== 0 ? (
+                {texts.length !== 0 && (
                   <>
                     {texts.map((el, idx) => {
                       return <AnimatedText text={el.text} key={idx} />;
                     })}
                   </>
-                ) : null}
+                )}
+
+                {icons.length !== 0 && (
+                  <>
+                    {icons.map((el, idx) => {
+                      return <AnimatedIcon icon={el.icon} key={idx} />;
+                    })}
+                  </>
+                )}
               </AnimatedImageBackground>
             </PinchGestureHandler>
           </ViewShot>
           {/* Modals */}
           <TextModal
             texts={texts}
-            visible={textVisible}
             setTexts={setTexts}
+            visible={textVisible}
             setVisible={setTextVisible}
           />
           {/* Modals */}
           {/*  */}
           {/* Content Section */}
         </View>
-        <StickerModal visible={isStickerOpen} setVisible={setIsStickerOpen} />
+        <StickerModal
+          state={icons}
+          setState={setIcons}
+          visible={isStickerOpen}
+          setVisible={setIsStickerOpen}
+        />
       </GestureHandlerRootView>
     </SafeAreaView>
   );

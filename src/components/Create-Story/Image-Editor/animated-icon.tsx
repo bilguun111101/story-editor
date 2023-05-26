@@ -6,6 +6,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { StyleSheet, Text, View } from "react-native";
 
+import { Image } from "expo-image";
+
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
@@ -16,7 +18,7 @@ import {
 } from "react-native-gesture-handler";
 
 interface AnimatedTextProps {
-  text: string;
+  icon: string;
 }
 
 type ContextType = {
@@ -24,12 +26,17 @@ type ContextType = {
   translateY: number;
 };
 
-const AnimatedText = ({ text }: AnimatedTextProps) => {
+const blurhash =
+  "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
+
+const AnimatedIcon = ({ icon }: AnimatedTextProps) => {
   // Reanimated shared values
   const translateX = useSharedValue(140);
   const translateY = useSharedValue(400);
   const scale = useSharedValue(1);
   const rotate = useSharedValue(0);
+
+  const AnimatedImage = Animated.createAnimatedComponent(Image);
 
   //Reanimated gesture handler events
   const panGestureEvent = useAnimatedGestureHandler<
@@ -79,9 +86,13 @@ const AnimatedText = ({ text }: AnimatedTextProps) => {
         <PanGestureHandler onGestureEvent={panGestureEvent}>
           <Animated.View>
             <PinchGestureHandler onGestureEvent={pinchHandler}>
-              <Animated.View style={[styles.textSection, rStyle]}>
-                <Animated.Text style={styles.text}>{text}</Animated.Text>
-              </Animated.View>
+              <AnimatedImage
+                transition={1000}
+                contentFit="cover"
+                source={{ uri: icon }}
+                placeholder={blurhash}
+                style={[styles.icon, rStyle]}
+              />
             </PinchGestureHandler>
           </Animated.View>
         </PanGestureHandler>
@@ -90,19 +101,11 @@ const AnimatedText = ({ text }: AnimatedTextProps) => {
   );
 };
 
-export default AnimatedText;
+export default AnimatedIcon;
 
 const styles = StyleSheet.create({
-  textSection: {
-    borderRadius: 10,
-    paddingVertical: 10,
-    position: "absolute",
-    paddingHorizontal: 20,
-    backgroundColor: "#fff",
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "700",
-    textAlign: "center",
+  icon: {
+    width: 70,
+    height: 70,
   },
 });
