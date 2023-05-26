@@ -86,13 +86,15 @@ const AnimatedIcon = ({ icon }: AnimatedTextProps) => {
         <PanGestureHandler onGestureEvent={panGestureEvent}>
           <Animated.View>
             <PinchGestureHandler onGestureEvent={pinchHandler}>
-              <AnimatedImage
-                transition={1000}
-                contentFit="cover"
-                source={{ uri: icon }}
-                placeholder={blurhash}
-                style={[styles.icon, rStyle]}
-              />
+              <Animated.View>
+                <AnimatedImage
+                  transition={1000}
+                  contentFit="cover"
+                  source={{ uri: icon }}
+                  placeholder={blurhash}
+                  style={[styles.icon, rStyle]}
+                />
+              </Animated.View>
             </PinchGestureHandler>
           </Animated.View>
         </PanGestureHandler>

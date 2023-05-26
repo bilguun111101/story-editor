@@ -1,7 +1,6 @@
 import {
   Text,
   View,
-  Modal,
   TextInput,
   Pressable,
   StyleSheet,
@@ -10,13 +9,14 @@ import {
 } from "react-native";
 // import {v4 as uuidv4} from 'uuid'
 import React, { useCallback, useState } from "react";
+import Modal from "../../modal";
 
 interface TextObject {
   text: string;
 }
 
 interface ModalTextProps {
-  visible?: boolean;
+  visible: boolean;
   texts: TextObject[];
   onClick?: () => void;
   setVisible: (el: boolean) => void;
@@ -45,12 +45,7 @@ const ModalText = ({
   }, [visible, text]);
 
   return (
-    <Modal
-      animationType="fade"
-      visible={visible}
-      transparent={true}
-      onRequestClose={() => setVisible(false)}
-    >
+    <Modal visible={visible} setVisible={setVisible}>
       <SafeAreaView style={styles.section}>
         <View style={styles.container}>
           <View style={styles.content}>

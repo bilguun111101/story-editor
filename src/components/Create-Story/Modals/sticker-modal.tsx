@@ -1,20 +1,17 @@
 import { Image } from "expo-image";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { FC, useCallback, useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
-  Dimensions,
-  FlatList,
-  // Image,
-  Modal,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
   Text,
-  TouchableOpacity,
   View,
+  FlatList,
+  Pressable,
+  Dimensions,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -22,6 +19,9 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
+
+import Modal from "../../modal";
+import testIcons from "../../../assest/json/icons.json";
 
 type stateType = any[];
 
@@ -32,56 +32,16 @@ interface StickerModalProps {
   setState: (el: stateType) => void;
 }
 
-const testIcons = [
-  {
-    id: "1",
-    title: "Logo",
-    icons: [
-      {
-        id: "1",
-        url: "https://www.shareicon.net/download/2016/07/08/117548_google.svg",
-      },
-      {
-        id: "2",
-        url: "https://cdn.icon-icons.com/icons2/2415/PNG/512/mongodb_original_logo_icon_146424.png",
-      },
-      {
-        id: "3",
-        url: "https://upload.wikimedia.org/wikipedia/commons/f/fd/DynamoDB.png",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "Logo",
-    icons: [
-      {
-        id: "1",
-        url: "https://www.shareicon.net/download/2016/07/08/117548_google.svg",
-      },
-      {
-        id: "2",
-        url: "https://cdn.icon-icons.com/icons2/2415/PNG/512/mongodb_original_logo_icon_146424.png",
-      },
-      {
-        id: "3",
-        url: "https://upload.wikimedia.org/wikipedia/commons/f/fd/DynamoDB.png",
-      },
-    ],
-  },
-];
-
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const CONTENT_HEIGHT = SCREEN_HEIGHT - SCREEN_HEIGHT / 1.3;
 
-const StickerModal = ({
+const StickerModal: FC<StickerModalProps> = ({
   state,
   visible,
   setState,
   setVisible,
-}: StickerModalProps) => {
-  const navigation = useNavigation<any>();
+}) => {
   const translateY = useSharedValue(SCREEN_HEIGHT);
 
   const AddIcon = useCallback(
@@ -104,12 +64,7 @@ const StickerModal = ({
   });
 
   return (
-    <Modal
-      animationType="fade"
-      visible={visible}
-      transparent={true}
-      onRequestClose={() => setVisible(false)}
-    >
+    <Modal visible={visible} setVisible={setVisible}>
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
           <Pressable style={styles.closeBtn} onPress={() => setVisible(false)}>
@@ -128,25 +83,27 @@ const StickerModal = ({
                 return (
                   <View style={styles.iconsRow}>
                     <Text style={styles.title}>{item.title}</Text>
-                    <FlatList
-                      data={item.icons}
-                      horizontal
-                      contentContainerStyle={styles.row}
-                      showsHorizontalScrollIndicator={false}
-                      renderItem={({ item }) => {
-                        return (
-                          <TouchableOpacity onPress={() => AddIcon(item.url)}>
-                            <Image
-                              source={{ uri: item.url }}
-                              transition={100}
-                              contentFit="contain"
-                              style={styles.icon}
-                            />
-                          </TouchableOpacity>
-                        );
-                      }}
-                      keyExtractor={(item) => item.id}
-                    />
+                    <View style={styles.rowContainer}>
+                      <FlatList
+                        data={item.icons}
+                        horizontal
+                        contentContainerStyle={styles.row}
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={({ item }) => {
+                          return (
+                            <TouchableOpacity onPress={() => AddIcon(item.url)}>
+                              <Image
+                                source={{ uri: item.url }}
+                                transition={100}
+                                contentFit="contain"
+                                style={styles.icon}
+                              />
+                            </TouchableOpacity>
+                          );
+                        }}
+                        keyExtractor={(item) => item.id}
+                      />
+                    </View>
                   </View>
                 );
               }}
@@ -201,6 +158,8 @@ const styles = StyleSheet.create({
     gap: 10,
     width: "100%",
     paddingVertical: 10,
+  },
+  rowContainer: {
     borderBottomWidth: 0.5,
   },
 });
