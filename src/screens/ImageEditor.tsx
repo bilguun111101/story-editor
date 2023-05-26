@@ -23,7 +23,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import {
   TextModal,
   MusicModal,
-  EffectModal,
+  FilterModal,
   StickerModal,
   AnimatedText,
   AnimatedIcon,
@@ -42,7 +42,7 @@ const ImageEditor = ({ route }: any) => {
   const [icons, setIcons] = useState<Icon[]>([]);
   const [texts, setTexts] = useState<TextObject[]>([]);
   const [music, setMusic] = useState<Music>(undefined);
-  const [effect, setEffect] = useState<Effect>(undefined);
+  const [filter, setFilter] = useState<any>(image);
   const [textVisible, setTextVisible] = useState<boolean>(false);
   // View shot variable
   const view_shot_ref = useRef<any>();
@@ -54,7 +54,7 @@ const ImageEditor = ({ route }: any) => {
   // Modal variables
   const stickerRef = useRef<BottomSheet>(null);
   const [isMusicOpen, setIsMusicOpen] = useState<boolean>(false);
-  const [isEffectOpen, setIsEffectOpen] = useState<boolean>(false);
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [isStickerOpen, setIsStickerOpen] = useState<boolean>(false);
   // Open modals
   const StickerOnSubmit = useCallback(() => {
@@ -64,8 +64,12 @@ const ImageEditor = ({ route }: any) => {
   const onTextClick = useCallback(() => {
     setTextVisible(true);
   }, [textVisible]);
-  const MusicOnSubmit = useCallback(() => {}, [isMusicOpen]);
-  const EffectOnSubmit = useCallback(() => {}, [isEffectOpen]);
+  const MusicOnSubmit = useCallback(() => {
+    setIsMusicOpen(true);
+  }, [isMusicOpen]);
+  const FilterOnSubmit = useCallback(() => {
+    setIsFilterOpen(true);
+  }, [isFilterOpen]);
   // --------------------
 
   // Click functions
@@ -94,10 +98,14 @@ const ImageEditor = ({ route }: any) => {
 
   // Header buttons element
   const right_buttons = [
-    { text: "Stickers", setVisible: setTextVisible, onClick: StickerOnSubmit },
+    {
+      text: "Stickers",
+      setVisible: setIsStickerOpen,
+      onClick: StickerOnSubmit,
+    },
     { text: "Text", setVisible: setTextVisible, onClick: onTextClick },
-    { text: "Music", setVisible: setTextVisible, onClick: MusicOnSubmit },
-    { text: "Effects", setVisible: setTextVisible, onClick: EffectOnSubmit },
+    { text: "Music", setVisible: setIsMusicOpen, onClick: MusicOnSubmit },
+    { text: "Filter", setVisible: setIsFilterOpen, onClick: FilterOnSubmit },
   ];
 
   // Reanimated style
@@ -146,7 +154,7 @@ const ImageEditor = ({ route }: any) => {
             <PinchGestureHandler onGestureEvent={pinchHandler}>
               <AnimatedImageBackground
                 style={[styles.imageBackground, rStyle]}
-                source={{ uri: image }}
+                source={{ uri: filter }}
               >
                 {texts.length !== 0 && (
                   <>
@@ -188,11 +196,11 @@ const ImageEditor = ({ route }: any) => {
           visible={isMusicOpen}
           setVisible={setIsMusicOpen}
         />
-        <EffectModal
-          state={effect}
-          setState={setEffect}
-          visible={isEffectOpen}
-          setVisible={setIsEffectOpen}
+        <FilterModal
+          image={image}
+          setImage={setFilter}
+          visible={isFilterOpen}
+          setVisible={setIsFilterOpen}
         />
         {/* Modals */}
       </GestureHandlerRootView>

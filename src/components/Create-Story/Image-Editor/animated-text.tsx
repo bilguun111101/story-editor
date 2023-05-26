@@ -4,14 +4,14 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 import {
   PanGestureHandler,
-  PanGestureHandlerGestureEvent,
   PinchGestureHandler,
-  PinchGestureHandlerGestureEvent,
   RotationGestureHandler,
+  PanGestureHandlerGestureEvent,
+  PinchGestureHandlerGestureEvent,
   RotationGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
 

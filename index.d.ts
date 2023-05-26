@@ -13,4 +13,4 @@ interface Icon {
 
 type Music = { id: string; url: string } | undefined;
 
-type Effect = { url: string } | undefined;
+type Effect = { image: any };
