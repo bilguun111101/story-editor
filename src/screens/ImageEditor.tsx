@@ -13,8 +13,6 @@ import { useNavigation } from "@react-navigation/native";
 import ViewShot, { captureRef } from "react-native-view-shot";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-const testSound = require("../assest/sound/test.mp3");
-
 import {
   PinchGestureHandler,
   GestureHandlerRootView,
@@ -23,9 +21,11 @@ import {
 
 import BottomSheet from "@gorhom/bottom-sheet";
 import {
-  AnimatedText,
   TextModal,
+  MusicModal,
+  EffectModal,
   StickerModal,
+  AnimatedText,
   AnimatedIcon,
 } from "../components";
 import Animated, {
@@ -41,6 +41,8 @@ const ImageEditor = ({ route }: any) => {
   const navigation = useNavigation<any>();
   const [icons, setIcons] = useState<Icon[]>([]);
   const [texts, setTexts] = useState<TextObject[]>([]);
+  const [music, setMusic] = useState<Music>(undefined);
+  const [effect, setEffect] = useState<Effect>(undefined);
   const [textVisible, setTextVisible] = useState<boolean>(false);
   // View shot variable
   const view_shot_ref = useRef<any>();
@@ -51,11 +53,19 @@ const ImageEditor = ({ route }: any) => {
 
   // Modal variables
   const stickerRef = useRef<BottomSheet>(null);
+  const [isMusicOpen, setIsMusicOpen] = useState<boolean>(false);
+  const [isEffectOpen, setIsEffectOpen] = useState<boolean>(false);
   const [isStickerOpen, setIsStickerOpen] = useState<boolean>(false);
+  // Open modals
   const StickerOnSubmit = useCallback(() => {
     stickerRef.current?.snapToIndex(0);
     setIsStickerOpen(true);
   }, []);
+  const onTextClick = useCallback(() => {
+    setTextVisible(true);
+  }, [textVisible]);
+  const MusicOnSubmit = useCallback(() => {}, [isMusicOpen]);
+  const EffectOnSubmit = useCallback(() => {}, [isEffectOpen]);
   // --------------------
 
   // Click functions
@@ -67,10 +77,6 @@ const ImageEditor = ({ route }: any) => {
       console.log(error);
     }
   }, [view_shot_ref.current]);
-
-  const onTextClick = useCallback(() => {
-    setTextVisible(true);
-  }, [textVisible]);
   //
 
   // Gesture handlers
@@ -90,9 +96,8 @@ const ImageEditor = ({ route }: any) => {
   const right_buttons = [
     { text: "Stickers", setVisible: setTextVisible, onClick: StickerOnSubmit },
     { text: "Text", setVisible: setTextVisible, onClick: onTextClick },
-    { text: "Music", setVisible: setTextVisible, onClick: onCapture },
-    { text: "Effects", setVisible: setTextVisible, onClick: onTextClick },
-    { text: "Draw", setVisible: setTextVisible, onClick: onTextClick },
+    { text: "Music", setVisible: setTextVisible, onClick: MusicOnSubmit },
+    { text: "Effects", setVisible: setTextVisible, onClick: EffectOnSubmit },
   ];
 
   // Reanimated style
@@ -161,23 +166,35 @@ const ImageEditor = ({ route }: any) => {
               </AnimatedImageBackground>
             </PinchGestureHandler>
           </ViewShot>
-          {/* Modals */}
-          <TextModal
-            texts={texts}
-            setTexts={setTexts}
-            visible={textVisible}
-            setVisible={setTextVisible}
-          />
-          {/* Modals */}
           {/*  */}
           {/* Content Section */}
         </View>
+        {/* Modals */}
+        <TextModal
+          texts={texts}
+          setTexts={setTexts}
+          visible={textVisible}
+          setVisible={setTextVisible}
+        />
         <StickerModal
           state={icons}
           setState={setIcons}
           visible={isStickerOpen}
           setVisible={setIsStickerOpen}
         />
+        <MusicModal
+          state={music}
+          setState={setMusic}
+          visible={isMusicOpen}
+          setVisible={setIsMusicOpen}
+        />
+        <EffectModal
+          state={effect}
+          setState={setEffect}
+          visible={isEffectOpen}
+          setVisible={setIsEffectOpen}
+        />
+        {/* Modals */}
       </GestureHandlerRootView>
     </SafeAreaView>
   );

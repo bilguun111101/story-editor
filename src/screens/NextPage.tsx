@@ -58,18 +58,21 @@ const NextPage = ({ route }: NextPageProps) => {
   }, [TrackPlayer, track]);
 
   useEffect(() => {
+    setUpPlayer();
+  }, []);
+
+  useEffect(() => {
     (async () => {
       // TrackPlayer.setRepeatMode(RepeatMode.Track);
-      setUpPlayer();
       await TrackPlayer.play();
     })();
-  }, []);
+  }, [TrackPlayer]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.bottom}>
-        <Slider />
-      </View>
+      {/* <View style={styles.bottom}> */}
+      {/* <Slider /> */}
+      {/* </View> */}
       <Image
         source={{ uri: image }}
         style={{ width: "100%", height: "100%" }}

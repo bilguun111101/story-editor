@@ -10,3 +10,7 @@ interface state {
 interface Icon {
   icon: string;
 }
+
+type Music = { id: string; url: string } | undefined;
+
+type Effect = { url: string } | undefined;

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Logo",
+    "icons": [
+      {
+        "id": "1",
+        "url": "https://www.shareicon.net/download/2016/07/08/117548_google.svg"
+      },
+      {
+        "id": "2",
+        "url": "https://cdn.icon-icons.com/icons2/2415/PNG/512/mongodb_original_logo_icon_146424.png"
+      },
+      {
+        "id": "3",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/fd/DynamoDB.png"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Emoji",
+    "icons": [
+      {
+        "id": "1",
+        "url": "https://img.uxwing.com/wp-content/themes/uxwing/download/emoji-emoticon/smile-icon.png"
+      },
+      {
+        "id": "2",
+        "url": "https://icon-library.com/images/fire-icon-png/fire-icon-png-4.jpg"
+      },
+      {
+        "id": "3",
+        "url": "https://cdn.iconscout.com/icon/free/png-256/free-sad-emoji-17-894764.png"
+      }
+    ]
+  }
+]
